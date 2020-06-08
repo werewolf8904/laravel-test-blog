@@ -62,6 +62,12 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "setup-project": [
+            "@composer install",
+            "@post-create-project-cmd",
+            "@php artisan storage:link",
+            "@php artisan migrate --seed"
         ]
     }
 }
