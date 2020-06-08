@@ -1,7 +1,10 @@
 @extends('layout')
+@section('breadcrumbs_items')
+    <li class="breadcrumb-item active" aria-current="page">@lang('Posts')</li>
+@endsection
 @section('content')
     <div class="row">
-        <div class="col-2 p-2">
+        <div class="col-md-2 p-2">
             <a href="{{route('post.create')}}"  class="btn btn-primary">@lang('Create new post')</a>
         </div>
     </div>

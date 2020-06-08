@@ -1,4 +1,8 @@
 @extends('layout')
+@section('breadcrumbs_items')
+    <li class="breadcrumb-item"><a href="{{route('posts-category.show',$post->posts_category_id)}}">{{$post->postsCategory->name}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{$post->name}}</li>
+@endsection
 @section('content')
     <h1>{{$post->name}}     <a href="{{route('post.edit',$post->id)}}" class="btn btn-secondary">Edit</a></h1>
     <div class="text-content jumbotron">

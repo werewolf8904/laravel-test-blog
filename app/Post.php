@@ -21,4 +21,9 @@ class Post extends Model
     {
         return $this->morphMany(Comment::class,  'belong_to');
     }
+
+    public function postsCategory()
+    {
+        return $this->belongsTo(PostsCategory::class);
+    }
 }

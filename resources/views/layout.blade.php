@@ -14,6 +14,15 @@
         <a class="navbar-brand" href="{{route('posts-category.index')}}">@lang('Categories')</a>
         <a class="navbar-brand" href="{{route('post.index')}}">@lang('Posts')</a>
     </nav>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{route('home')}}">@lang('Home')</a>
+            </li>
+            @yield('breadcrumbs_items')
+        </ol>
+    </nav>
 </header>
     <div class="container">
        @yield('content')

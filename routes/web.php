@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\PostsCategoryController::class,'index']);
+Route::get('/', [\App\Http\Controllers\PostsCategoryController::class,'index'])->name('home');
 
 Route::resource('post','PostController');
 Route::resource('posts-category','PostsCategoryController');

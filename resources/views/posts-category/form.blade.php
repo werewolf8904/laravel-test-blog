@@ -1,4 +1,8 @@
 @extends('layout')
+@section('breadcrumbs_items')
+    <li class="breadcrumb-item"><a href="{{route('posts-category.index')}}">@lang('Posts Categories')</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{$postsCategory->exists?$postsCategory->name:__('Posts Category')}}</li>
+@endsection
 @section('content')
 
     <div class="card">

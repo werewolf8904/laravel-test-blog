@@ -16,15 +16,4 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function getTypeForUrl()
-    {
-        switch ($this->belong_to_type)
-        {
-            case PostsCategory::class:
-                return 'category';
-            case Post::class:
-            default:
-                return 'post';
-        }
-    }
 }

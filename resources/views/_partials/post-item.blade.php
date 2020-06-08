@@ -1,5 +1,5 @@
 <div class="col-md-4">
-    <div class="card p-1">
+    <div class="card p-1 post-item">
     <div class="h3">{{$post->name}}</div>
     <div>
         <a href="{{route('post.show',$post->id)}}" class="btn btn-info">Show</a>

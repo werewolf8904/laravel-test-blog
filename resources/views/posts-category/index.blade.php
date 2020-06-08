@@ -1,4 +1,7 @@
 @extends('layout')
+@section('breadcrumbs_items')
+    <li class="breadcrumb-item active" aria-current="page">@lang('Posts Categories')</li>
+@endsection
 @section('content')
 <div class="row">
     <div class="col-md-2 p-2">
@@ -8,7 +11,7 @@
     <div class="row">
         @foreach($postsCategories as $postsCategory)
             <div class="col-md-4">
-                <div class="card p-1">
+                <div class="card p-1 category-item">
                     <div class="h3">{{$postsCategory->name}}</div>
                     <div>
                         <a href="{{route('posts-category.show',$postsCategory->id)}}" class="btn btn-info">Show</a>
