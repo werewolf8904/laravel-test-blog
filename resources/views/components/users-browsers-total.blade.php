@@ -1,0 +1,3 @@
+<div>
+    {{implode(', ',$browsers)}}
+</div>
