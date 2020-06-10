@@ -1,6 +1,7 @@
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
-    <label for="@propertyToId($name)">@propertyToLabel($name) {{isset($required)&&$required?'*':''}}</label>
-   <input type="file" name="@propertyToId($name)" {{isset($required)&&$required?'required':''}}>
+    <label>@propertyToLabel($name) {{isset($required)&&$required?'*':''}}
+        <input type="file" name="@propertyToId($name)" {{isset($required)&&$required?'required':''}}>
+    </label>
     @if($errors->has($name))
         <p class="label__error text-danger">
             {{ $errors->first($name) }}
