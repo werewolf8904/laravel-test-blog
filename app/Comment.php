@@ -30,6 +30,9 @@ class Comment extends Model
     const UPDATED_AT = null;
     protected $fillable = ['author', 'content'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
     public function belong_to()
     {
         return $this->morphTo();

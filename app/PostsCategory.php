@@ -27,13 +27,18 @@ class PostsCategory extends Model
     public $timestamps = false;
     protected $fillable = ['name', 'description'];
 
+    /**
+     * Get related posts
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
     /**
-     * Get all of the post's comments.
+     * Get related comments
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments()
     {

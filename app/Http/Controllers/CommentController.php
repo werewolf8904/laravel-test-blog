@@ -10,6 +10,12 @@ use App\PostsCategory;
 class CommentController extends Controller
 {
 
+    /**
+     * @param  CommentRequest  $request
+     * @param $type
+     * @param $id
+     * @return Comment
+     */
     public function add(CommentRequest $request, $type, $id)
     {
 
@@ -24,7 +30,7 @@ class CommentController extends Controller
         }
         $comment = new Comment($request->all());
         /**
-         * @var $model PostsCategory|Post
+         * @var PostsCategory|Post $model
          */
         $model->comments()->save($comment);
 

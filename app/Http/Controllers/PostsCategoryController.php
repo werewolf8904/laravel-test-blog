@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostsCategoryRequest;
 use App\PostsCategory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PostsCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @return View
      */
     public function index()
     {
@@ -20,7 +22,7 @@ class PostsCategoryController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @return View
      */
     public function create()
     {
@@ -32,6 +34,7 @@ class PostsCategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  PostsCategoryRequest  $request
+     * @return RedirectResponse
      */
     public function store(PostsCategoryRequest $request)
     {
@@ -43,7 +46,8 @@ class PostsCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\PostsCategory  $postsCategory
+     * @param  PostsCategory  $postsCategory
+     * @return View
      */
     public function show(PostsCategory $postsCategory)
     {
@@ -55,7 +59,8 @@ class PostsCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\PostsCategory  $postsCategory
+     * @param  PostsCategory  $postsCategory
+     * @return View
      */
     public function edit(PostsCategory $postsCategory)
     {
@@ -66,7 +71,8 @@ class PostsCategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  PostsCategoryRequest  $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  PostsCategory  $postsCategory
+     * @return RedirectResponse
      */
     public function update(PostsCategoryRequest $request, PostsCategory $postsCategory)
     {
@@ -79,8 +85,9 @@ class PostsCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\PostsCategory  $postsCategory
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  PostsCategory  $postsCategory
+     * @return RedirectResponse
+     * @throws \Exception
      */
     public function destroy(PostsCategory $postsCategory)
     {

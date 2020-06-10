@@ -34,13 +34,18 @@ class Post extends Model
     ];
 
     /**
-     * Get all of the post's comments.
+     * Get related comments
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments()
     {
         return $this->morphMany(Comment::class, 'belong_to');
     }
 
+    /**
+     * Get posts category
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function postsCategory()
     {
         return $this->belongsTo(PostsCategory::class);
