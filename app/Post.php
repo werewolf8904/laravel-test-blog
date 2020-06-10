@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable=['name','content','file','posts_category_id'];
-
-    public $timestamps=false;
-
-    protected $attributes=[
-        'file'=>''
+    public $timestamps = false;
+    protected $fillable = ['name', 'content', 'file', 'posts_category_id'];
+    protected $attributes = [
+        'file' => ''
     ];
 
     /**
@@ -19,7 +17,7 @@ class Post extends Model
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class,  'belong_to');
+        return $this->morphMany(Comment::class, 'belong_to');
     }
 
     public function postsCategory()

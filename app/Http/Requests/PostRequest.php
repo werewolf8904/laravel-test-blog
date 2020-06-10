@@ -16,10 +16,10 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required','string'],
-            'content'=>['required','string'],
-            'posts_category_id'=>['required','exists:App\PostsCategory,id'],
-            'file'=>['file','max:2048']
+            'name' => ['required', 'string'],
+            'content' => ['required', 'string'],
+            'posts_category_id' => ['required', 'exists:App\PostsCategory,id'],
+            'file' => ['file', 'max:2048']
         ];
     }
 }

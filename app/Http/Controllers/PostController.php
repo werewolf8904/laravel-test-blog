@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -15,9 +14,9 @@ class PostController extends Controller
     public function index()
     {
 
-        $posts=Post::paginate();
+        $posts = Post::paginate();
 
-        return view('post.index',compact('posts'));
+        return view('post.index', compact('posts'));
     }
 
     /**
@@ -26,8 +25,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        $post=new Post();
-        return view('post.form',compact('post'));
+        $post = new Post();
+        return view('post.form', compact('post'));
     }
 
     /**
@@ -37,11 +36,20 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post=new Post($request->all());
-        $this->loadFileFromRequest($request,$post);
+        $post = new Post($request->all());
+        $this->loadFileFromRequest($request, $post);
         $post->save();
 
         return redirect()->route('post.index');
+    }
+
+    protected function loadFileFromRequest(PostRequest $request, Post $post)
+    {
+        $file = $request->file('file');
+        if ($file) {
+            $path = $file->storeAs('public/postsfiles/'.$post->id, $file->getClientOriginalName());
+            $post->file = $path;
+        }
     }
 
     /**
@@ -51,8 +59,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $comments=$post->comments()->orderBy('created_at','desc')->paginate();
-        return view('post.show',compact('post','comments'));
+        $comments = $post->comments()->orderBy('created_at', 'desc')->paginate();
+        return view('post.show', compact('post', 'comments'));
     }
 
     /**
@@ -62,7 +70,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('post.form',compact('post'));
+        return view('post.form', compact('post'));
     }
 
     /**
@@ -75,7 +83,7 @@ class PostController extends Controller
     {
         $post->fill($request->all());
 
-       $this->loadFileFromRequest($request,$post);
+        $this->loadFileFromRequest($request, $post);
 
         $post->save();
         return redirect()->route('post.index');
@@ -90,15 +98,5 @@ class PostController extends Controller
     {
         $post->delete();
         return back();
-    }
-
-    protected function loadFileFromRequest(PostRequest $request,Post $post)
-    {
-        $file=$request->file('file');
-        if($file)
-        {
-            $path= $file->storeAs('public/postsfiles/'.$post->id,$file->getClientOriginalName());
-            $post->file=$path;
-        }
     }
 }

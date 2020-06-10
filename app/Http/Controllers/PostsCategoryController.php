@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostsCategoryRequest;
 use App\PostsCategory;
-use Illuminate\Http\Request;
 
 class PostsCategoryController extends Controller
 {
@@ -14,9 +13,9 @@ class PostsCategoryController extends Controller
      */
     public function index()
     {
-        $postsCategories=PostsCategory::paginate();
+        $postsCategories = PostsCategory::paginate();
 
-        return view('posts-category.index',compact('postsCategories'));
+        return view('posts-category.index', compact('postsCategories'));
     }
 
     /**
@@ -25,8 +24,8 @@ class PostsCategoryController extends Controller
      */
     public function create()
     {
-        $postsCategory=new PostsCategory();
-        return view('posts-category.form',compact('postsCategory'));
+        $postsCategory = new PostsCategory();
+        return view('posts-category.form', compact('postsCategory'));
     }
 
     /**
@@ -48,9 +47,9 @@ class PostsCategoryController extends Controller
      */
     public function show(PostsCategory $postsCategory)
     {
-        $posts=$postsCategory->posts()->paginate();
-        $comments=$postsCategory->comments()->orderBy('created_at','desc')->paginate();
-        return view('posts-category.show',compact('postsCategory','posts','comments'));
+        $posts = $postsCategory->posts()->paginate();
+        $comments = $postsCategory->comments()->orderBy('created_at', 'desc')->paginate();
+        return view('posts-category.show', compact('postsCategory', 'posts', 'comments'));
     }
 
     /**
@@ -60,7 +59,7 @@ class PostsCategoryController extends Controller
      */
     public function edit(PostsCategory $postsCategory)
     {
-        return view('posts-category.form',compact('postsCategory'));
+        return view('posts-category.form', compact('postsCategory'));
     }
 
     /**

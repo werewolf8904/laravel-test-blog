@@ -16,8 +16,8 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'author'=>['required','regex:/^[А-ЯA-ZЇІЄҐ][а-яёіїєґa-z]+\s[А-ЯA-ZЇІЄҐ][а-яёіїєґa-z]+$/ui'],
-            'content'=>['required','string'],
+            'author' => ['required', 'regex:/^[А-ЯA-ZЇІЄҐ][а-яёіїєґa-z]+\s[А-ЯA-ZЇІЄҐ][а-яёіїєґa-z]+$/ui'],
+            'content' => ['required', 'string'],
         ];
     }
 }

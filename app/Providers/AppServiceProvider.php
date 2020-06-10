@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Middleware\UseresBrowsersDetect;
 use App\PostsCategory;
 use App\View\Components\UsersBrowsersTotal;
 use Illuminate\Support\Facades\Blade;
@@ -27,18 +26,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \View::composer('post.form',function ($view){
+        \View::composer('post.form', function ($view) {
 
-            $postsCategories=PostsCategory::all();
-            $categories=[];
-            foreach ($postsCategories as $postsCategory)
-            {
-                $categories[$postsCategory->id]=$postsCategory->name;
+            $postsCategories = PostsCategory::all();
+            $categories = [];
+            foreach ($postsCategories as $postsCategory) {
+                $categories[$postsCategory->id] = $postsCategory->name;
             }
             $view->with(compact('categories'));
         });
 
-        Blade::component('users-browsers-total',UsersBrowsersTotal::class);
+        Blade::component('users-browsers-total', UsersBrowsersTotal::class);
 
         Blade::directive('propertyToId', function ($expression) {
             return "<?php echo str_replace(['[',']'],['_',''],$expression); ?>";

@@ -3,19 +3,18 @@
 namespace Tests\Feature;
 
 use App\Post;
-use App\PostsCategory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PostTest extends TestCase
 {
     use DatabaseMigrations;
     use RefreshDatabase;
+
     public function test_get_post()
     {
-        $post=factory(Post::class)->create();
+        $post = factory(Post::class)->create();
 
         $response = $this->get('/post');
 
@@ -31,13 +30,14 @@ class PostTest extends TestCase
 
     public function test_delete()
     {
-        $post=factory(Post::class)->create();
+        $post = factory(Post::class)->create();
         $post->delete();
         $this->assertDeleted($post);
     }
+
     public function test_post_page()
     {
-        $post=factory(Post::class)->create();
+        $post = factory(Post::class)->create();
 
         $response = $this->get('/post/'.$post->id);
         $response->assertStatus(200);

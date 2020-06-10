@@ -2,12 +2,12 @@
 
 namespace App\View\Components;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\Component;
 
 class UsersBrowsersTotal extends Component
 {
-    public $browsers=[];
+    public $browsers = [];
+
     /**
      * Create a new component instance.
      *
@@ -15,10 +15,9 @@ class UsersBrowsersTotal extends Component
      */
     public function __construct()
     {
-        $browsers=\DB::table('users_browsers')->groupBy('user_agent')->selectRaw('user_agent,COUNT(id) as count')->get();
-        foreach ($browsers as $browser)
-        {
-            $this->browsers[]=$browser->user_agent.' : '.$browser->count;
+        $browsers = \DB::table('users_browsers')->groupBy('user_agent')->selectRaw('user_agent,COUNT(id) as count')->get();
+        foreach ($browsers as $browser) {
+            $this->browsers[] = $browser->user_agent.' : '.$browser->count;
         }
 
     }

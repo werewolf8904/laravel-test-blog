@@ -16,8 +16,8 @@ class PostsCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required','string'],
-            'description'=>['nullable','string']
+            'name' => ['required', 'string'],
+            'description' => ['nullable', 'string']
         ];
     }
 }

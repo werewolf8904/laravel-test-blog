@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\PostsCategoryController::class,'index'])->name('home');
+Route::get('/', [\App\Http\Controllers\PostsCategoryController::class, 'index'])->name('home');
 
-Route::resource('post','PostController');
-Route::resource('posts-category','PostsCategoryController');
+Route::resource('post', 'PostController');
+Route::resource('posts-category', 'PostsCategoryController');
 
-Route::post('add-comment/{type}/{id}',[\App\Http\Controllers\CommentController::class,'add'])->name('add-comment');
+Route::post('add-comment/{type}/{id}', [\App\Http\Controllers\CommentController::class, 'add'])->name('add-comment');

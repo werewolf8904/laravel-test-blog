@@ -6,25 +6,23 @@ use App\Comment;
 use App\Http\Requests\CommentRequest;
 use App\Post;
 use App\PostsCategory;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
 
-    public function add(CommentRequest $request,$type,$id)
+    public function add(CommentRequest $request, $type, $id)
     {
 
-        switch ($type)
-        {
+        switch ($type) {
             case 'category':
-                $model=PostsCategory::findOrFail($id);
+                $model = PostsCategory::findOrFail($id);
                 break;
             case 'post':
             default:
-                $model=Post::findOrFail($id);
+                $model = Post::findOrFail($id);
                 break;
         }
-        $comment=new Comment($request->all());
+        $comment = new Comment($request->all());
         /**
          * @var $model PostsCategory|Post
          */

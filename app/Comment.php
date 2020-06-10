@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable=['author','content'];
-
     const UPDATED_AT = null;
-
+    protected $fillable = ['author', 'content'];
 
     public function belong_to()
     {
