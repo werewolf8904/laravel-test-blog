@@ -1,0 +1,25 @@
+.comment-form{
+    margin-top: 10px;
+}
+.comments{
+    margin-top: 15px;
+
+    &__author{
+        font-weight: bold;
+        padding: 0.75rem;
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+    &__title{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    &__text{
+
+        padding-left: 5px;
+        background-color: rgba(0, 0, 0, 0.03);
+        &-header{
+            font-weight: bold;
+        }
+    }
+
+}
