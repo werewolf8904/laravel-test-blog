@@ -13,11 +13,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 final class CommentRepository implements CommentRepositoryInterface
 {
-
-    public const COMMENT_TYPE_POST = 'post';
-
-    public const COMMENT_TYPE_POSTS_CATEGORY = 'category';
-
     /**
      * @param  Post  $post
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|mixed
@@ -47,25 +42,14 @@ final class CommentRepository implements CommentRepositoryInterface
 
     /**
      * @param  array  $data
-     * @param $type
-     * @param $id
+     * @param  Post|PostsCategory  $model
      * @return Comment
      */
-    public function add(array $data, $type, $id): Comment
+    public function add(array $data, $model): Comment
     {
-        switch ($type) {
-            case self::COMMENT_TYPE_POSTS_CATEGORY:
-                $model = PostsCategory::findOrFail($id);
-                break;
-            case self::COMMENT_TYPE_POST:
-            default:
-                $model = Post::findOrFail($id);
-                break;
-        }
+
         $comment = new Comment($data);
-        /**
-         * @var PostsCategory|Post $model
-         */
+
         $model->comments()->save($comment);
 
         return $comment;

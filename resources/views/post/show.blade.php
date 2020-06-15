@@ -21,6 +21,6 @@
     @endif
     <hr/>
     <span class="comments__title">@lang('Comments')</span>
-    @include('_partials.commentform',['type'=>'post','id'=>$post->id])
+    @include('_partials.commentform',['type'=>\App\Factories\CommentableFactory::COMMENT_TYPE_POST,'id'=>$post->id])
     @include('_partials.comments')
 @endsection
