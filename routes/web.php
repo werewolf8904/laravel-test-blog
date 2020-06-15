@@ -18,4 +18,4 @@ Route::get('/', [\App\Http\Controllers\PostsCategoryController::class, 'index'])
 Route::resource('post', 'PostController');
 Route::resource('posts-category', 'PostsCategoryController');
 
-Route::post('add-comment/{type}/{id}', [\App\Http\Controllers\CommentController::class, 'add'])->name('add-comment');
+Route::post('add-comment/{type}/{id}', 'CommentController')->name('add-comment');

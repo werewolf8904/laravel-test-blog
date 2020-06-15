@@ -36,7 +36,7 @@ class CommentController extends Controller
      * @param $id
      * @return Comment
      */
-    public function add(CommentRequest $request, $type, $id)
+    public function __invoke(CommentRequest $request, $type, $id)
     {
 
         $model = $this->commentableFactory->build($type, $id);
