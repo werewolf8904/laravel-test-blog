@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Http\Requests\CommentRequest;
-use App\Post;
-use App\PostsCategory;
+use App\Repositories\Contracts\CommentRepositoryInterface;
 
 class CommentController extends Controller
 {
@@ -14,26 +13,13 @@ class CommentController extends Controller
      * @param  CommentRequest  $request
      * @param $type
      * @param $id
+     * @param  CommentRepositoryInterface  $commentRepository
      * @return Comment
      */
-    public function add(CommentRequest $request, $type, $id)
+    public function add(CommentRequest $request, $type, $id, CommentRepositoryInterface $commentRepository)
     {
 
-        switch ($type) {
-            case 'category':
-                $model = PostsCategory::findOrFail($id);
-                break;
-            case 'post':
-            default:
-                $model = Post::findOrFail($id);
-                break;
-        }
-        $comment = new Comment($request->all());
-        /**
-         * @var PostsCategory|Post $model
-         */
-        $model->comments()->save($comment);
+        return $commentRepository->add($request->all(), $type, $id);
 
-        return $comment;
     }
 }

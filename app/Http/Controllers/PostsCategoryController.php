@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostsCategoryRequest;
 use App\PostsCategory;
+use App\Repositories\Contracts\CommentRepositoryInterface;
+use App\Repositories\Contracts\PostRepositoryInterface;
+use App\Repositories\Contracts\PostsCategoryRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -11,22 +14,24 @@ class PostsCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param  PostsCategoryRepositoryInterface  $postsCategoryRepository
      * @return View
      */
-    public function index()
+    public function index(PostsCategoryRepositoryInterface $postsCategoryRepository)
     {
-        $postsCategories = PostsCategory::paginate();
+        $postsCategories = $postsCategoryRepository->getAllPaginated();
 
         return view('posts-category.index', compact('postsCategories'));
     }
 
     /**
      * Show the form for creating a new resource.
+     * @param  PostsCategoryRepositoryInterface  $postsCategoryRepository
      * @return View
      */
-    public function create()
+    public function create(PostsCategoryRepositoryInterface $postsCategoryRepository)
     {
-        $postsCategory = new PostsCategory();
+        $postsCategory = $postsCategoryRepository->new();
         return view('posts-category.form', compact('postsCategory'));
     }
 
@@ -34,11 +39,13 @@ class PostsCategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  PostsCategoryRequest  $request
+     * @param  PostsCategoryRepositoryInterface  $postsCategoryRepository
      * @return RedirectResponse
      */
-    public function store(PostsCategoryRequest $request)
+    public function store(PostsCategoryRequest $request, PostsCategoryRepositoryInterface $postsCategoryRepository)
     {
-        PostsCategory::create($request->all());
+        $postsCategoryRepository->create($request->all());
+
 
         return redirect()->route('posts-category.index');
     }
@@ -47,12 +54,17 @@ class PostsCategoryController extends Controller
      * Display the specified resource.
      *
      * @param  PostsCategory  $postsCategory
+     * @param  CommentRepositoryInterface  $commentRepository
+     * @param  PostRepositoryInterface  $postRepository
      * @return View
      */
-    public function show(PostsCategory $postsCategory)
-    {
-        $posts = $postsCategory->posts()->paginate();
-        $comments = $postsCategory->comments()->orderBy('created_at', 'desc')->paginate();
+    public function show(
+        PostsCategory $postsCategory,
+        CommentRepositoryInterface $commentRepository,
+        PostRepositoryInterface $postRepository
+    ) {
+        $posts = $postRepository->getAllForPostsCategoryPaginated($postsCategory);
+        $comments = $commentRepository->getForPostsCategory($postsCategory);
         return view('posts-category.show', compact('postsCategory', 'posts', 'comments'));
     }
 
@@ -72,12 +84,15 @@ class PostsCategoryController extends Controller
      *
      * @param  PostsCategoryRequest  $request
      * @param  PostsCategory  $postsCategory
+     * @param  PostsCategoryRepositoryInterface  $postsCategoryRepository
      * @return RedirectResponse
      */
-    public function update(PostsCategoryRequest $request, PostsCategory $postsCategory)
-    {
-        $postsCategory->fill($request->all());
-        $postsCategory->save();
+    public function update(
+        PostsCategoryRequest $request,
+        PostsCategory $postsCategory,
+        PostsCategoryRepositoryInterface $postsCategoryRepository
+    ) {
+        $postsCategoryRepository->update($postsCategory, $request->all());
 
         return redirect()->route('posts-category.index');
     }
@@ -86,12 +101,14 @@ class PostsCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  PostsCategory  $postsCategory
+     * @param  PostsCategoryRepositoryInterface  $postsCategoryRepository
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function destroy(PostsCategory $postsCategory)
+    public function destroy(PostsCategory $postsCategory, PostsCategoryRepositoryInterface $postsCategoryRepository)
     {
-        $postsCategory->delete();
+        $postsCategoryRepository->delete($postsCategory);
+
         return back();
     }
 }

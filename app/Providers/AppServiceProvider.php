@@ -3,21 +3,17 @@
 namespace App\Providers;
 
 use App\PostsCategory;
+use App\Upload\FileUploader;
+use App\Upload\FileUploaderInterface;
 use App\View\Components\UsersBrowsersTotal;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
+    public $singletons = [
+        FileUploaderInterface::class => FileUploader::class,
+    ];
 
     /**
      * Bootstrap any application services.

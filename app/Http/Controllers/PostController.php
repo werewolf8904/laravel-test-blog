@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Post;
+use App\Repositories\Contracts\CommentRepositoryInterface;
+use App\Repositories\Contracts\PostRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -11,23 +13,25 @@ class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param  PostRepositoryInterface  $postRepository
      * @return View
      */
-    public function index()
+    public function index(PostRepositoryInterface $postRepository)
     {
 
-        $posts = Post::paginate();
+        $posts = $postRepository->getAllPaginated();
 
         return view('post.index', compact('posts'));
     }
 
     /**
      * Show the form for creating a new resource.
+     * @param  PostRepositoryInterface  $postRepository
      * @return View
      */
-    public function create()
+    public function create(PostRepositoryInterface $postRepository)
     {
-        $post = new Post();
+        $post = $postRepository->new();
         return view('post.form', compact('post'));
     }
 
@@ -35,39 +39,26 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  PostRequest  $request
+     * @param  PostRepositoryInterface  $postRepository
      * @return RedirectResponse
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request, PostRepositoryInterface $postRepository)
     {
-        $post = new Post($request->all());
-        $this->loadFileFromRequest($request, $post);
-        $post->save();
+        $postRepository->create($request->all(), $request->file('file'));
 
         return redirect()->route('post.index');
-    }
-
-    /**
-     * @param  PostRequest  $request
-     * @param  Post  $post
-     */
-    protected function loadFileFromRequest(PostRequest $request, Post $post)
-    {
-        $file = $request->file('file');
-        if ($file) {
-            $path = $file->storeAs('public/postsfiles/'.$post->id, $file->getClientOriginalName());
-            $post->file = $path;
-        }
     }
 
     /**
      * Display the specified resource.
      *
      * @param  Post  $post
+     * @param  CommentRepositoryInterface  $commentRepository
      * @return View
      */
-    public function show(Post $post)
+    public function show(Post $post, CommentRepositoryInterface $commentRepository)
     {
-        $comments = $post->comments()->orderBy('created_at', 'desc')->paginate();
+        $comments = $commentRepository->getForPost($post);
         return view('post.show', compact('post', 'comments'));
     }
 
@@ -87,15 +78,13 @@ class PostController extends Controller
      *
      * @param  PostRequest  $request
      * @param  Post  $post
+     * @param  PostRepositoryInterface  $postRepository
      * @return RedirectResponse
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(PostRequest $request, Post $post, PostRepositoryInterface $postRepository)
     {
-        $post->fill($request->all());
+        $postRepository->update($post, $request->all(), $request->file('file'));
 
-        $this->loadFileFromRequest($request, $post);
-
-        $post->save();
         return redirect()->route('post.index');
     }
 
@@ -103,12 +92,13 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Post  $post
+     * @param  PostRepositoryInterface  $postRepository
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, PostRepositoryInterface $postRepository)
     {
-        $post->delete();
+        $postRepository->delete($post);
         return back();
     }
 }
