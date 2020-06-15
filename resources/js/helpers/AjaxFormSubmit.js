@@ -1,5 +1,5 @@
 import FormHelper from "./FormHelper";
-import ClosureDebouncer from "./ClosureDebouncer";
+import ClosureDebouncer from "../utils/ClosureDebouncer";
 
 const formDebouncer = new ClosureDebouncer();
 
@@ -27,7 +27,7 @@ export default class AjaxFormSubmit {
                 .catch((response) => {
                     formHelper.addErrorsFormJsonResponse(response.response.data);
                 })
-                .then(() => {
+                .finally(() => {
                     formHelper.enableSubmitInputs();
 
                 });

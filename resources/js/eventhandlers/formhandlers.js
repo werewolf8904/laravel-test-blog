@@ -1,4 +1,4 @@
-import AjaxFormSubmit from "./helpers/AjaxFormSubmit";
+import AjaxFormSubmit from "../helpers/AjaxFormSubmit";
 
 // Ajax form handler
 $(document).on('submit', '[data-ajax=1]', function (event) {
