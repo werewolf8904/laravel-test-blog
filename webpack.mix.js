@@ -18,6 +18,23 @@ if (mix.inProduction()) {
     mix.version();
 }
 else {
-    mix.webpackConfig({ devtool: "inline-source-map" });
+    mix.webpackConfig({
+        devtool: "inline-source-map",
+        devServer: {
+            disableHostCheck: true,
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
+            host: process.env.MIX_HMR_URL,
+            port: 8080
+        },
+    });
     mix.sourceMaps();
+    mix.options({
+        hmrOptions: {
+            host: process.env.MIX_HMR_URL,
+            port: 8080
+        }
+    });
 }
+
