@@ -8,8 +8,8 @@
 - Run mix variants
     - only build assets __docker-compose run mix npm run dev__
     - with watch mode __docker-compose run mix npm run watch__
-    - run node dev server with HMR __docker-compose up mix -d__
-- Start application __docker-compose up app nginx -d__
+    - run node dev server with HMR __docker-compose up -d mix__
+- Start application __docker-compose up -d app nginx__
 
 
 If needed add __127.0.0.1 test-blog.localhost__ to system hosts file.
