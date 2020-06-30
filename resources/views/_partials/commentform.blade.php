@@ -3,7 +3,7 @@
         @lang('Post comment')
     </div>
     <div class="card-body">
-        <form action="{{route('add-comment',[$type,$id]) }}" method="POST" enctype="multipart/form-data" data-ajax="1">
+        <form action="{{$commentLink }}" method="POST" enctype="multipart/form-data" data-ajax="1">
             @csrf
             <div class="form-group">
                 <label for="comment-author"> @lang('Your name and surname') *</label>

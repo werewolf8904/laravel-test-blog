@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\CommentableFactory;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use App\Repositories\Contracts\CommentRepositoryInterface;
@@ -54,12 +55,18 @@ class PostController extends Controller
      *
      * @param  Post  $post
      * @param  CommentRepositoryInterface  $commentRepository
+     * @param  CommentableFactory  $commentableFactory
      * @return View
      */
-    public function show(Post $post, CommentRepositoryInterface $commentRepository)
-    {
+    public function show(
+        Post $post,
+        CommentRepositoryInterface $commentRepository,
+        CommentableFactory $commentableFactory
+    ) {
         $comments = $commentRepository->getForPost($post);
-        return view('post.show', compact('post', 'comments'));
+        $commentableAlias = $commentableFactory->getAliasByModelClass(get_class($post));
+        $commentLink = route('add-comment', [$commentableAlias->getAlias(), $post->id]);
+        return view('post.show', compact('post', 'comments', 'commentLink'));
     }
 
     /**

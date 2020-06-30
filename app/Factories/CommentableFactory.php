@@ -4,30 +4,61 @@
 namespace App\Factories;
 
 
-use App\Post;
-use App\PostsCategory;
+use App\Comment\CommentableAliasCollection;
+use App\Comment\CommentableAliasInterface;
+use App\Comment\CommentableInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class CommentableFactory
 {
-    public const COMMENT_TYPE_POST = 'post';
-
-    public const COMMENT_TYPE_POSTS_CATEGORY = 'category';
+    /**
+     * @var CommentableAliasCollection
+     */
+    private CommentableAliasCollection $aliasCollection;
 
     /**
-     * @param $type
-     * @param $id
-     * @return Post|Post[]|PostsCategory|PostsCategory[]
+     * CommentableFactory constructor.
+     * @param  CommentableAliasCollection  $aliasCollection
      */
-    public function build($type, $id)
+    public function __construct(CommentableAliasCollection $aliasCollection)
     {
-        switch ($type) {
-            case self::COMMENT_TYPE_POSTS_CATEGORY:
-                return PostsCategory::findOrFail($id);
-            case self::COMMENT_TYPE_POST:
-                return Post::findOrFail($id);
-            default:
-                throw new ModelNotFoundException('Unable to find model to comment.');
+        $this->aliasCollection = $aliasCollection;
+    }
+
+    /**
+     * @param $alias
+     * @param $model_id
+     * @return CommentableInterface
+     */
+    public function buildByAlias($alias, $model_id)
+    {
+        $commentableAlias = $this->getModelClassByAlias($alias);
+        return $commentableAlias->getModelClass()::findOrFail($model_id);
+    }
+
+    /**
+     * @param $alias
+     * @return \App\Comment\CommentableAliasInterface
+     */
+    public function getModelClassByAlias(string $alias): CommentableAliasInterface
+    {
+        $commentableAliasInterface = $this->aliasCollection->findByAlias($alias);
+        if ($commentableAliasInterface === null) {
+            throw new ModelNotFoundException('Unable to find model to comment.');
         }
+        return $commentableAliasInterface;
+    }
+
+    /**
+     * @param  string  $class
+     * @return \App\Comment\CommentableAliasInterface
+     */
+    public function getAliasByModelClass(string $class): CommentableAliasInterface
+    {
+        $commentableAliasInterface = $this->aliasCollection->findByClass($class);
+        if ($commentableAliasInterface === null) {
+            throw new ModelNotFoundException('Unable to find model to comment.');
+        }
+        return $commentableAliasInterface;
     }
 }

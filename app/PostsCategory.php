@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Comment\CommentableInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\PostsCategory whereName($value)
  * @mixin \Eloquent
  */
-class PostsCategory extends Model
+class PostsCategory extends Model implements CommentableInterface
 {
     public $timestamps = false;
     protected $fillable = ['name', 'description'];

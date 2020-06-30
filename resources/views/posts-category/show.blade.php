@@ -24,6 +24,6 @@
     </div>
     <hr/>
     <span class="comments__title">@lang('Comments')</span>
-    @include('_partials.commentform',['type'=>\App\Factories\CommentableFactory::COMMENT_TYPE_POSTS_CATEGORY,'id'=>$postsCategory->id])
+    @include('_partials.commentform')
     @include('_partials.comments')
 @endsection

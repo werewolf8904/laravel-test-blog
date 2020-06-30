@@ -39,8 +39,8 @@ class CommentController extends Controller
     public function __invoke(CommentRequest $request, $type, $id)
     {
 
-        $model = $this->commentableFactory->build($type, $id);
-        return $this->commentRepository->add($request->all(), $model);
+        $commentableModel = $this->commentableFactory->buildByAlias($type, $id);
+        return $this->commentRepository->add($request->all(), $commentableModel);
 
     }
 }
