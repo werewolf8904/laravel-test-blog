@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Comment\CommentableInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post wherePostsCategoryId($value)
  * @mixin \Eloquent
  */
-class Post extends Model
+class Post extends Model implements CommentableInterface
 {
     public $timestamps = false;
     protected $fillable = ['name', 'content', 'file', 'posts_category_id'];

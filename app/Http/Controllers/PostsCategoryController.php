@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\CommentableFactory;
 use App\Http\Requests\PostsCategoryRequest;
 use App\PostsCategory;
 use App\Repositories\Contracts\CommentRepositoryInterface;
@@ -56,16 +57,20 @@ class PostsCategoryController extends Controller
      * @param  PostsCategory  $postsCategory
      * @param  CommentRepositoryInterface  $commentRepository
      * @param  PostRepositoryInterface  $postRepository
+     * @param  CommentableFactory  $commentableFactory
      * @return View
      */
     public function show(
         PostsCategory $postsCategory,
         CommentRepositoryInterface $commentRepository,
-        PostRepositoryInterface $postRepository
+        PostRepositoryInterface $postRepository,
+        CommentableFactory $commentableFactory
     ) {
         $posts = $postRepository->getAllForPostsCategoryPaginated($postsCategory);
         $comments = $commentRepository->getForPostsCategory($postsCategory);
-        return view('posts-category.show', compact('postsCategory', 'posts', 'comments'));
+        $commentableAlias = $commentableFactory->getAliasByModelClass(get_class($postsCategory));
+        $commentLink = route('add-comment', [$commentableAlias->getAlias(), $postsCategory->id]);
+        return view('posts-category.show', compact('postsCategory', 'posts', 'comments', 'commentLink'));
     }
 
     /**

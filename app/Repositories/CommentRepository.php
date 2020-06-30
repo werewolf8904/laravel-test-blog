@@ -42,15 +42,15 @@ final class CommentRepository implements CommentRepositoryInterface
 
     /**
      * @param  array  $data
-     * @param  Post|PostsCategory  $model
+     * @param  Comment\CommentableInterface  $commentableModel
      * @return Comment
      */
-    public function add(array $data, $model): Comment
+    public function add(array $data, Comment\CommentableInterface $commentableModel): Comment
     {
 
         $comment = new Comment($data);
 
-        $model->comments()->save($comment);
+        $commentableModel->comments()->save($comment);
 
         return $comment;
     }

@@ -26,8 +26,8 @@ interface CommentRepositoryInterface
 
     /**
      * @param  array  $data
-     * @param  Post|PostsCategory  $model
+     * @param  Comment\CommentableInterface  $commentableModel
      * @return Comment
      */
-    public function add(array $data, $model): Comment;
+    public function add(array $data, Comment\CommentableInterface $commentableModel): Comment;
 }
